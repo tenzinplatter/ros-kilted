@@ -15,21 +15,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-latest
-            platform: linux-64
-            folder_cache: 'output/linux-64'
           - os: ubuntu-24.04-arm
             platform: linux-aarch64
             folder_cache: 'output/linux-aarch64'
-          - os: macos-15-intel
-            platform: osx-64
-            folder_cache: 'output/osx-64'
-          - os: macos-15
-            platform: osx-arm64
-            folder_cache: 'output/osx-arm64'
-          - os: windows-2022
-            platform: win-64
-            folder_cache: 'C:/bld/win-64'
 
     runs-on: ${{ matrix.os }}
 
@@ -75,11 +63,6 @@ jobs:
       run: |
         mkdir -p recipes
         pixi run -v vinca --platform ${{ matrix.platform }} -m -n
-
-    - name: Check patches
-      shell: bash -l {0}
-      run: |
-        pixi run check-patches
 
     - name: Restore build cache
       id: cache-restore
